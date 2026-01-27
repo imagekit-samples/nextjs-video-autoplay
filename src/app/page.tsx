@@ -76,7 +76,7 @@ export default function Home() {
             </a>
             {' · '}
             <a
-              href="https://github.com/gitpichardo/nextjs-video-autoplay"
+              href="https://github.com/gitpichardo/next-autoplay"
               className="text-gray-600 hover:text-gray-900 transition-colors"
               target="_blank"
               rel="noopener noreferrer"

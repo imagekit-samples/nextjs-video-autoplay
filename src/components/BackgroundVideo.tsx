@@ -1,17 +1,13 @@
 'use client';
 
 import { AutoplayVideo } from './AutoplayVideo';
-import { Transformation } from '@/lib/imagekit';
 
 interface BackgroundVideoProps {
   path: string;
-  transformation?: Transformation;
+  transformation?: Array<Record<string, string | number>>;
   children: React.ReactNode;
 }
 
-/**
- * Full-screen background video with overlay for hero sections.
- */
 export function BackgroundVideo({ path, transformation, children }: BackgroundVideoProps) {
   return (
     <section className="relative h-screen w-full overflow-hidden">

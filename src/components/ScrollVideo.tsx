@@ -3,27 +3,19 @@
 import { useRef, useEffect, useState } from 'react';
 import { buildSrc } from '@imagekit/next';
 import { useInView } from 'react-intersection-observer';
-import { Transformation, imagekitConfig } from '@/lib/imagekit';
 
 interface ScrollVideoProps {
   path: string;
-  transformation?: Transformation;
-  poster?: string;
+  transformation?: Array<Record<string, string | number>>;
+  posterTime?: number;
   className?: string;
   threshold?: number;
 }
 
-/**
- * Video that plays when scrolled into view and pauses when hidden.
- * 
- * Uses buildSrc + native <video> for ref access.
- * This allows play/pause control and seamless resume from the same position.
- * 
- */
 export function ScrollVideo({
   path,
-  transformation = [{ width: 1280, quality: 50, raw: 'ac-none' }],
-  poster,
+  transformation = [{ width: 1280, quality: 50, audioCodec: 'none' }],
+  posterTime = 1,
   className = '',
   threshold = 0.5,
 }: ScrollVideoProps) {
@@ -31,10 +23,14 @@ export function ScrollVideo({
   const { ref: containerRef, inView } = useInView({ threshold });
   const [isBlocked, setIsBlocked] = useState(false);
 
-  const src = buildSrc({
-    urlEndpoint: imagekitConfig.urlEndpoint,
-    src: path,
-    transformation,
+  const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!;
+
+  const src = buildSrc({ urlEndpoint, src: path, transformation });
+  
+  const poster = buildSrc({
+    urlEndpoint,
+    src: `${path}/ik-thumbnail.jpg`,
+    transformation: [{ width: 1280, startOffset: posterTime }],
   });
 
   useEffect(() => {
@@ -51,7 +47,7 @@ export function ScrollVideo({
     }
   }, [inView]);
 
-  if (isBlocked && poster) {
+  if (isBlocked) {
     return (
       <div className={className}>
         <img src={poster} alt="" className="h-full w-full object-cover" />

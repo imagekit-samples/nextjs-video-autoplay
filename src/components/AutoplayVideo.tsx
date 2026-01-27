@@ -1,27 +1,26 @@
 'use client';
 
-import { Video } from '@imagekit/next';
-import { Transformation } from '@/lib/imagekit';
+import { Video, buildSrc } from '@imagekit/next';
 
 interface AutoplayVideoProps {
   path: string;
-  transformation?: Transformation;
-  poster?: string;
+  transformation?: Array<Record<string, string | number>>;
+  posterTime?: number;
   className?: string;
 }
 
-/**
- * Simple autoplay video component using native autoPlay attribute.
- * 
- * For basic autoplay, use autoPlay, muted and playsInline.
- * Modern browsers (Chrome, Safari, Firefox) all support this pattern.
- */
 export function AutoplayVideo({
   path,
-  transformation = [{ width: 1280, quality: 50, raw: 'ac-none' }],
-  poster,
+  transformation = [{ width: 1280, quality: 50, audioCodec: 'none' }],
+  posterTime = 1,
   className = '',
 }: AutoplayVideoProps) {
+  const poster = buildSrc({
+    urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
+    src: `${path}/ik-thumbnail.jpg`,
+    transformation: [{ width: 1280, startOffset: posterTime }],
+  });
+
   return (
     <Video
       src={path}
@@ -31,8 +30,8 @@ export function AutoplayVideo({
       playsInline
       loop
       poster={poster}
-      preload="auto"
-      className={`h-full w-full object-cover ${className}`}
+      preload="none"
+      className={className}
     />
   );
 }

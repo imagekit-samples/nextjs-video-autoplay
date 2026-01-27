@@ -2,6 +2,9 @@
  * ImageKit configuration and transformation utilities
  */
 
+// Type Exports
+export type Transformation = Array<Record<string, string | number>>;
+
 // Configuration
 export const imagekitConfig = {
   urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || 'https://ik.imagekit.io/gqcbm9jfq',
@@ -11,16 +14,16 @@ export const imagekitConfig = {
 export const DEMO_VIDEO_PATH = '/12221555_3840_2160_30fps.mp4';
 
 // Transformation Presets
-export const TRANSFORMATIONS = {
+export const TRANSFORMATIONS: Record<string, Transformation> = {
   /** Web-optimized: 1280px, 50% quality, no audio */
-  optimized: [{ width: 1280, quality: 50, raw: 'ac-none' }],
+  optimized: [{ width: 1280, quality: 50, audioCodec: 'none' }],
   
   /** Original quality (bypass optimization) */
   original: [{ raw: 'orig-true' }],
   
   /** Mobile: 720px, 50% quality, no audio */
-  mobile: [{ width: 720, quality: 50, raw: 'ac-none' }],
-} as const;
+  mobile: [{ width: 720, quality: 50, audioCodec: 'none' }],
+};
 
 // Utility Functions
 
@@ -47,6 +50,9 @@ const TRANSFORM_MAP: Record<string, string> = {
   rotation: 'rt',
   blur: 'bl',
   dpr: 'dpr',
+  audioCodec: 'ac',
+  startOffset: 'so',
+  duration: 'du',
 };
 
 /**
@@ -54,7 +60,7 @@ const TRANSFORM_MAP: Record<string, string> = {
  */
 export function buildImageKitUrl(
   path: string,
-  transformation?: Array<Record<string, string | number>>
+  transformation?: Transformation
 ): string {
   const baseUrl = `${imagekitConfig.urlEndpoint}${path}`;
   
@@ -74,6 +80,3 @@ export function buildImageKitUrl(
   
   return `${baseUrl}?tr=${transformStrings.join(':')}`;
 }
-
-// Type Exports
-export type Transformation = Array<Record<string, string | number>>;
