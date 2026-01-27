@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Video Autoplay Demo
 
-## Getting Started
+A Next.js demo showing production-ready autoplay video components that work across all modern browsers. Uses ImageKit for video optimization.
 
-First, run the development server:
+## What it does
+
+- Autoplay videos with three simple attributes: `autoPlay`, `muted`, `playsInline`
+- Uses `playsInline` to prevent iOS fullscreen hijacking
+- Plays videos on scroll, pauses when hidden
+- Reduces 64MB videos to under 1MB with ImageKit transformations
+
+## Quickstart
 
 ```bash
+git clone https://github.com/gitpichardo/nextjs-video-autoplay.git
+cd nextjs-video-autoplay
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). You'll see three demo patterns: 
+- Hero background video
+- Scroll-triggered video playback
+- Before/after optimization comparison
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Use your own ImageKit account
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To use your own videos and account:
 
-## Learn More
+1. [Sign up for ImageKit for free](https://imagekit.io/registration)
+2. Create `.env.local` in the project root:
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/YOUR_IMAGEKIT_ID
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Update `DEMO_VIDEO_PATH` in `lib/imagekit.ts` to point to your video.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Transformations
 
-## Deploy on Vercel
+| Parameter | Effect |
+| --- | --- |
+| `w-1280` | Resize to 1280px width |
+| `q-50` | 50% quality |
+| `ac-none` | Strip audio (required for autoplay) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- All videos use the `ac-none` transformation to strip audio tracks. This guarantees browsers treat the video as silent.
+- The `ScrollVideo` component uses `buildSrc` with a native `<video>` element to enable play/pause control via refs.
+- The `AutoplayVideo` component uses the simple `autoPlay` attribute—no JavaScript required for basic playback.
+
+## About
+
+This repository accompanies the blog post: [How to Autoplay Video in Next.js](https://imagekit.io/blog/nextjs-video-autoplay/)
