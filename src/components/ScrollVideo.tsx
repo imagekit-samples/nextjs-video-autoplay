@@ -16,9 +16,9 @@ interface ScrollVideoProps {
 /**
  * Video that plays when scrolled into view and pauses when hidden.
  * 
- * Uses buildSrc + native <video> for ref access since the SDK's Video
- * component doesn't forward refs. This allows play/pause control and
- * seamless resume from the same position.
+ * Uses buildSrc + native <video> for ref access.
+ * This allows play/pause control and seamless resume from the same position.
+ * 
  */
 export function ScrollVideo({
   path,

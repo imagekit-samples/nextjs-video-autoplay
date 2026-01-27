@@ -13,7 +13,7 @@ interface AutoplayVideoProps {
 /**
  * Simple autoplay video component using native autoPlay attribute.
  * 
- * For basic autoplay, no refs are needed - just use autoPlay + muted + playsInline.
+ * For basic autoplay, use autoPlay, muted and playsInline.
  * Modern browsers (Chrome, Safari, Firefox) all support this pattern.
  */
 export function AutoplayVideo({

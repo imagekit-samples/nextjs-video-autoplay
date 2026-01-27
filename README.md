@@ -1,10 +1,10 @@
 # Next.js Video Autoplay Demo
 
-A Next.js demo showing production-ready autoplay video components that work across all modern browsers. Uses ImageKit for video optimization.
+A Next.js demo showing production-ready autoplay video components that work across all modern browsers. Uses ImageKit for video optimization. Check out the companion blog [here](https://www.notion.so/How-to-Fix-Autoplay-Video-in-Next-js-Shared-2f5eae1ec49580399e6ac5398a634873?source=copy_link).
 
 ## What it does
 
-- Autoplay videos with three simple attributes: `autoPlay`, `muted`, `playsInline`
+- Autoplay videos with three attributes: `autoPlay`, `muted`, `playsInline`
 - Uses `playsInline` to prevent iOS fullscreen hijacking
 - Plays videos on scroll, pauses when hidden
 - Reduces 64MB videos to under 1MB with ImageKit transformations
@@ -44,12 +44,6 @@ NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/YOUR_IMAGEKIT_ID
 | `q-50` | 50% quality |
 | `ac-none` | Strip audio (required for autoplay) |
 
-## Notes
-
-- All videos use the `ac-none` transformation to strip audio tracks. This guarantees browsers treat the video as silent.
-- The `ScrollVideo` component uses `buildSrc` with a native `<video>` element to enable play/pause control via refs.
-- The `AutoplayVideo` component uses the simple `autoPlay` attribute—no JavaScript required for basic playback.
-
 ## About
 
-This repository accompanies the blog post: [How to Autoplay Video in Next.js](https://imagekit.io/blog/nextjs-video-autoplay/)
+This repository accompanies the blog post: [How to fix Autoplay Video in Next.js](https://www.notion.so/How-to-Fix-Autoplay-Video-in-Next-js-Shared-2f5eae1ec49580399e6ac5398a634873?source=copy_link)
